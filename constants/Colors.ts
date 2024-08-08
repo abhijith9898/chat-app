@@ -14,6 +14,16 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
+
+    loginBackground:'#9ea3b0',
+    richBlack: '#0d1f2d',
+    paynesGray: '#546a7b',
+    cadetGray: '#9ea3b0',
+    mistyRose: '#fae1df',
+    pale:'#efd2c6',
+    sand:'#e4c3ad'
+    //refer link color combo: https://coolors.co/0d1f2d-546a7b-9ea3b0-fae1df-efd2c6-e4c3ad
+
   },
   dark: {
     text: '#ECEDEE',
