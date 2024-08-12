@@ -52,8 +52,10 @@ const useStyles = () => {
       textAlign:'center',
       marginTop:10
     },
+    buttonView:{
+      width:'80%'
+    },
     button: {
-      width: '80%',
       padding: 16,
       borderRadius: 10,
       backgroundColor: colors.loginButton,
@@ -70,6 +72,10 @@ const useStyles = () => {
       fontSize: 18,
       fontWeight: 'bold',
     },
+    loaderView:{
+      // display:'flex',
+      // justifyContent:'center'
+    }
   });
 };
 

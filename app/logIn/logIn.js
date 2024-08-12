@@ -2,11 +2,13 @@ import {View, Text, TextInput, TouchableOpacity, Image, Pressable, Alert} from '
 import { useState } from 'react';
 import useStyles from './styles'
 import { useRouter } from 'expo-router';
+import Loader from '../../components/loader';
 export default function LogIn(){
     const styles = useStyles();
     const router = useRouter();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoader] = useState(false)
 
     const handleLogin = () => {
         console.log('Username:', username);
@@ -24,7 +26,7 @@ export default function LogIn(){
                 source={require('../../assets/images/connect-logo.png')}
                 style={styles.logo}
             />
-            <Text style={styles.title}>Sign In</Text>
+            <Text style={styles.title}>Log In</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Username"
@@ -39,9 +41,18 @@ export default function LogIn(){
                 secureTextEntry
             />
             
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonView}>
+                {loading?(
+                    <View style={styles.loaderView}>
+                        <Loader/>
+                    </View>
+                ):(
+                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                        <Text style={styles.buttonText}>Log In</Text>
+                    </TouchableOpacity>
+                )}
+            </View>
+            
 
             <Pressable>
                 <Text style={styles.forgot}>Forgot Password?</Text>
@@ -49,7 +60,7 @@ export default function LogIn(){
             <Pressable onPress={()=>{
                 router.push('signUp/signUp')
             }}>
-                <Text style={styles.noAccount}>Don't have an Account? Sign Up</Text>
+                <Text style={styles.noAccount}>Don't have an Account? Create One</Text>
             </Pressable>
 
         </View>

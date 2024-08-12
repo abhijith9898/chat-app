@@ -15,7 +15,8 @@ export const Colors = {
     loginButton:'#0d1f2d',
     text:'#fae1df',
     inputBackground:'#fae1df',
-    inputText:"#0d1f2d",
+    inputText:'#0d1f2d',
+    loginLoader:'#e4c3ad',
 
     richBlack: '#0d1f2d',
     charcoal:'#314554',
