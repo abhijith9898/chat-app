@@ -23,34 +23,50 @@ const useStyles = () => {
     title: {
       fontSize: 32,
       marginBottom: 32,
-      color: '#333',
+      color: colors.text,
+      fontWeight:'500'
     },
     input: {
-      width: '100%',
-      padding: 16,
+      width: '80%',
+      padding: 12,
       marginBottom: 16,
-      borderRadius: 8,
-      backgroundColor: '#fff',
+      borderRadius: 10,
+      backgroundColor: colors.inputBackground,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 8,
       elevation: 4,
+      color:colors.inputText,
+      fontWeight:'900'
+    },
+    forgot:{
+      color:colors.text,
+      width:'80%',
+      textAlign:'right',
+      marginTop:10
+    },
+    noAccount:{
+      color:colors.text,
+      width:'80%',
+      textAlign:'center',
+      marginTop:10
     },
     button: {
-      width: '100%',
+      width: '80%',
       padding: 16,
-      borderRadius: 8,
-      backgroundColor: '#6200ee',
+      borderRadius: 10,
+      backgroundColor: colors.loginButton,
       alignItems: 'center',
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 8,
       elevation: 4,
+      marginTop:18
     },
     buttonText: {
-      color: '#fff',
+      color: colors.text,
       fontSize: 18,
       fontWeight: 'bold',
     },
