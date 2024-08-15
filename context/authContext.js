@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, database } from '../database/config'
+import { doc, getDoc,setDoc } from "firebase/firestore";
 
 export const AuthContext =  createContext();
 export const AuthContextProvider =  ({children})=>{
@@ -7,8 +9,18 @@ export const AuthContextProvider =  ({children})=>{
     const [authenticated, setAuthenticated]= useState(undefined)
 
     useEffect(()=>{        
-        setAuthenticated(false)
-    })
+        // setAuthenticated(false)
+        const authcheck = onAuthStateChanged(auth, (user)=>{
+            if(user){
+                setAuthenticated(true)
+                setUser(user)
+            } else{
+                setAuthenticated(false)
+                setUser(null)
+            }
+        });
+        return authcheck;
+    },[])
 
     const logIn = async(email, password)=>{
         try {
@@ -28,9 +40,22 @@ export const AuthContextProvider =  ({children})=>{
 
     const signUp = async(email, password, userName, profile)=>{
         try {
-            
+            const response =  await createUserWithEmailAndPassword(auth, email, password);
+            console.log('response', response?.user)
+            await setDoc(doc(database, 'users', response?.user?.uid, {
+                userName,
+                userId: response?.user?.uid
+            }))
+            let signUpData = {
+                success: true,
+                data: response?.user
+            }
+            return signUpData
         } catch (error) {
             console.log("Error:", error)
+            return {
+                success: false, message: error.message
+            }
         }
     }
 

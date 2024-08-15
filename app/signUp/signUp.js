@@ -11,13 +11,17 @@ export default function SignUp(){
     const [password, setPassword] = useState('');
     const [loading, setLoader] = useState(false)
 
-    const handleLogin = () => {
+    const handleSignUp = () => {
+        console.log('name', name)
         console.log('Username:', username);
         console.log('Password:', password);
 
-        if(!username || !password){
+        if(!name || !username || !password){
             Alert.alert("Failed", "Please enter all details")
         }
+
+        // setLoader(true)
+
 
     };
 
@@ -54,7 +58,7 @@ export default function SignUp(){
                         <Loader/>
                     </View>
                 ):(
-                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                    <TouchableOpacity style={styles.button} onPress={handleSignUp}>
                         <Text style={styles.buttonText}>Create</Text>
                     </TouchableOpacity>
                 )}
