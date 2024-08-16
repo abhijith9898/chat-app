@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, database } from '../database/config'
 import { doc, getDoc,setDoc, collection } from "firebase/firestore";
 
@@ -14,6 +14,7 @@ export const AuthContextProvider =  ({children})=>{
             if(user){
                 setAuthenticated(true)
                 setUser(user)
+                updateUserDetails(user?.uid)
             } else{
                 setAuthenticated(false)
                 setUser(null)
@@ -22,19 +23,53 @@ export const AuthContextProvider =  ({children})=>{
         return authcheck;
     },[])
 
-    const logIn = async(email, password)=>{
-        try {
-            
-        } catch (error) {
-            console.log("Error:", error)
+    const updateUserDetails = async (id) => {
+        const document = doc(database, 'users', id);
+        const resData = await getDoc(document)
+        if(resData){
+            let obj={
+                name: resData.data().name,
+                email: resData.data().email,
+                userId: resData.data().userId
+            }
+            setUser(obj)
         }
     }
 
-    const logOut = async(email, password)=>{
+    const logIn = async(email, password)=>{
         try {
-            
+            const response = await signInWithEmailAndPassword(auth, email, password)
+
+            return {
+                success: true
+            }
         } catch (error) {
             console.log("Error:", error)
+            let message
+            if(error.message.includes('invalid-email')){
+                message = 'Invalid Email!'
+            }
+            if(error.message.includes('invalid-credential')){
+                message = 'Invalid Credential!'
+            }
+            return {
+                success: false, message: message
+            }
+        }
+    }
+
+    const logOut = async()=>{
+        try {
+            await signOut(auth)
+            return {
+                success: true,
+            }
+        } catch (error) {
+            console.log("Error:", error)
+            return {
+                success: false,
+                message: error.message
+            }
         }
     }
 
@@ -63,7 +98,10 @@ export const AuthContextProvider =  ({children})=>{
             console.log("Error:", error)
             let message
             if(error.message.includes('auth/invalid-email')){
-                message = 'Invalid Email'
+                message = 'Invalid Email!'
+            }
+            if(error.message.includes('auth/email-already-in-use')){
+                message = 'Email Already in Use!'
             }
             return {
                 

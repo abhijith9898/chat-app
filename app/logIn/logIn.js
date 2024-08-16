@@ -3,19 +3,29 @@ import { useState } from 'react';
 import useStyles from './styles'
 import { useRouter } from 'expo-router';
 import Loader from '../../components/loader';
+import { useAuth } from '../../context/authContext';
 export default function LogIn(){
     const styles = useStyles();
     const router = useRouter();
-    const [username, setUsername] = useState('');
+    const {logIn} = useAuth();
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoader] = useState(false)
+    const [loader, setLoader] = useState(false)
 
-    const handleLogin = () => {
-        console.log('Username:', username);
+    const handleLogin = async () => {
+        console.log('Username:', userName);
         console.log('Password:', password);
 
-        if(!username || !password){
-            Alert.alert("Failed", "Please enter Username and Password")
+        if(!userName || !password){
+            Alert.alert("Failed", "Please enter Email and Password")
+        }else{
+            setLoader(true)
+            const resData = await logIn(userName, password)
+            setLoader(false)
+            console.log("response", resData)
+            if(!resData.success){
+                Alert.alert('Failed', resData.message)
+            }
         }
 
     };
@@ -29,9 +39,9 @@ export default function LogIn(){
             <Text style={styles.title}>Log In</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
+                placeholder="Username / Email"
+                value={userName}
+                onChangeText={setUserName}
             />
             <TextInput
                 style={styles.input}
@@ -42,7 +52,7 @@ export default function LogIn(){
             />
             
             <View style={styles.buttonView}>
-                {loading?(
+                {loader?(
                     <View style={styles.loaderView}>
                         <Loader/>
                     </View>

@@ -11,7 +11,7 @@ export default function SignUp(){
     const [name, setName] = useState('')
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoader] = useState(false)
+    const [loader, setLoader] = useState(false)
 
     const handleSignUp = async () => {
         console.log('name', name)
@@ -62,7 +62,7 @@ export default function SignUp(){
             />
             
             <View style={styles.buttonView}>
-                {loading?(
+                {loader?(
                     <View style={styles.loaderView}>
                         <Loader/>
                     </View>
