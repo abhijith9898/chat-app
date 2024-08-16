@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, database } from '../database/config'
-import { doc, getDoc,setDoc } from "firebase/firestore";
+import { doc, getDoc,setDoc, collection } from "firebase/firestore";
 
 export const AuthContext =  createContext();
 export const AuthContextProvider =  ({children})=>{
@@ -38,14 +38,22 @@ export const AuthContextProvider =  ({children})=>{
         }
     }
 
-    const signUp = async(email, password, userName, profile)=>{
+    const signUp = async(name, email, password)=>{
         try {
             const response =  await createUserWithEmailAndPassword(auth, email, password);
-            console.log('response', response?.user)
-            await setDoc(doc(database, 'users', response?.user?.uid, {
-                userName,
+            console.log('auth context response', response?.user.uid)
+
+            const dbCollection = collection(database, 'users');
+            const document = {
+                name: name,
+                email: email,
                 userId: response?.user?.uid
-            }))
+            }
+            const docRef = doc(dbCollection, response?.user?.uid)
+            await setDoc(docRef, document);
+
+            console.log("setDoc worked")
+
             let signUpData = {
                 success: true,
                 data: response?.user
@@ -53,8 +61,13 @@ export const AuthContextProvider =  ({children})=>{
             return signUpData
         } catch (error) {
             console.log("Error:", error)
+            let message
+            if(error.message.includes('auth/invalid-email')){
+                message = 'Invalid Email'
+            }
             return {
-                success: false, message: error.message
+                
+                success: false, message: message
             }
         }
     }

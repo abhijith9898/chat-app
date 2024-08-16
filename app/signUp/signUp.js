@@ -3,25 +3,34 @@ import { useState } from 'react';
 import useStyles from './styles'
 import { useRouter } from 'expo-router';
 import Loader from '../../components/loader';
+import { useAuth } from '../../context/authContext';
 export default function SignUp(){
     const styles = useStyles();
     const router = useRouter();
+    const {signUp} = useAuth()
     const [name, setName] = useState('')
-    const [username, setUsername] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoader] = useState(false)
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         console.log('name', name)
-        console.log('Username:', username);
+        console.log('UserName:', userName);
         console.log('Password:', password);
 
-        if(!name || !username || !password){
+        if(!name || !userName || !password){
             Alert.alert("Failed", "Please enter all details")
+        } else{
+            setLoader(true)
+            let resData = await signUp(name, userName, password)
+            setLoader(false)
+            console.log("response", resData)
+            if (!resData.success) {
+                Alert.alert("Failed", resData.message)
+            }
         }
 
-        // setLoader(true)
-
+        
 
     };
 
@@ -41,8 +50,8 @@ export default function SignUp(){
             <TextInput
                 style={styles.input}
                 placeholder=" Enter Email Address"
-                value={username}
-                onChangeText={setUsername}
+                value={userName}
+                onChangeText={setUserName}
             />
             <TextInput
                 style={styles.input}
