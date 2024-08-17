@@ -17,6 +17,7 @@ export const Colors = {
     inputBackground:'#fae1df',
     inputText:'#0d1f2d',
     loginLoader:'#e4c3ad',
+    dashboardHeader:'#546a7b',
 
     richBlack: '#0d1f2d',
     charcoal:'#314554',

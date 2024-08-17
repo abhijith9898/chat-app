@@ -2,8 +2,10 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import styles from './styles'
 import { useAuth } from '../../../context/authContext'
+import SideBar from '../../../components/sideBar/sideBar'
 
-export default function ChatList() {
+
+export default function Dashboard() {
   const {logOut, user} = useAuth();
   const handleLogOut = async ()=>{
     await logOut();
@@ -15,6 +17,8 @@ export default function ChatList() {
         <Text>Log Out</Text>
       </Pressable>
       <Text>Name: {user.name}</Text>  
+
+      {/* <SideBar /> */}
     </View>
   )
 }

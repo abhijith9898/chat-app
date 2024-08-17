@@ -64,9 +64,9 @@ export default function LogIn(){
             </View>
             
 
-            <Pressable>
+            {/* <Pressable>
                 <Text style={styles.forgot}>Forgot Password?</Text>
-            </Pressable>
+            </Pressable> */}
             <Pressable onPress={()=>{
                 router.push('signUp/signUp')
             }}>
