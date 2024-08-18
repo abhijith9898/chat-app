@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Colors } from '../../constants/Colors';
+import { Colors } from '../../../constants/Colors';
 import { useColorScheme } from 'react-native';
 
 const useStyles = () => {
@@ -10,19 +10,7 @@ const useStyles = () => {
     console.log("colors", colorScheme)
   
     return StyleSheet.create({
-        circle: {
-            width: 40,
-            height: 40,
-            borderRadius: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          letter: {
-            fontSize: 25,
-            // color: '#0d1f2d',
-            fontWeight: 'bold',
-          },
-      
+       
     });
   };
 

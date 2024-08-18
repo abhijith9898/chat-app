@@ -103,6 +103,9 @@ export const AuthContextProvider =  ({children})=>{
             if(error.message.includes('auth/email-already-in-use')){
                 message = 'Email Already in Use!'
             }
+            if(error.message.includes('auth/weak-password')){
+                message = 'Weak Password'
+            }
             return {
                 
                 success: false, message: message
